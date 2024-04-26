@@ -1,16 +1,15 @@
 {
   "files": {
     "main.css": "/ez-shipment/static/css/main.f855e6bc.css",
-    "main.js": "/ez-shipment/static/js/main.bf2dadb1.js",
+    "main.js": "/ez-shipment/static/js/main.4afa40d8.js",
     "static/js/453.b5e3f67b.chunk.js": "/ez-shipment/static/js/453.b5e3f67b.chunk.js",
-    "static/media/logo.svg": "/ez-shipment/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/ez-shipment/index.html",
     "main.f855e6bc.css.map": "/ez-shipment/static/css/main.f855e6bc.css.map",
-    "main.bf2dadb1.js.map": "/ez-shipment/static/js/main.bf2dadb1.js.map",
+    "main.4afa40d8.js.map": "/ez-shipment/static/js/main.4afa40d8.js.map",
     "453.b5e3f67b.chunk.js.map": "/ez-shipment/static/js/453.b5e3f67b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.bf2dadb1.js"
+    "static/js/main.4afa40d8.js"
   ]
 }
