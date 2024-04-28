@@ -1,4 +1,4 @@
-import { meetsLengthWidthHeightRestrictions } from "./DimensionRestrictionTemplates"
+import { meetsLengthWidthHeightRestrictions, meetsLongestAndShortestSideSumRestriction } from "./DimensionRestrictionTemplates"
 
 export type Provider = "DHL" | "Hermes"
 
@@ -32,12 +32,7 @@ export const deliveryOptions: DeliveryOption[] = [
         name: 'Hermes Päckchen',
         provider: "Hermes",
         priceEur: 4.50,
-        dimensionRestrictions: (dimensions) => {
-            const dimensionsArray: number[] = [dimensions.lengthCm, dimensions.widthCm, dimensions.depthCm]
-            const maxDimension = Math.max(...dimensionsArray); 
-            const minDimension = Math.min(...dimensionsArray);
-            return maxDimension + minDimension <= 37;
-        },
+        dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(37, dimensions),
         dimensionRestrictionText: 'Longest and shortest side under 37cm',
         maxWeightKg: 2,
         note: 'Home delivery'

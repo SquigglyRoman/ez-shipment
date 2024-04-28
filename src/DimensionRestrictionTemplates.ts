@@ -6,3 +6,10 @@ export function meetsLengthWidthHeightRestrictions(restriction: Dimensions, ente
 
     return sortedEntered.every((value, index) => value <= sortedRestriction[index]);
 }
+
+export function meetsLongestAndShortestSideSumRestriction(maxLongestPlusShortestCm: number, entered: Dimensions): boolean {
+    const dimensionsArray: number[] = Object.values(entered);
+    const maxDimension = Math.max(...dimensionsArray);
+    const minDimension = Math.min(...dimensionsArray);
+    return maxDimension + minDimension <= maxLongestPlusShortestCm;
+}
