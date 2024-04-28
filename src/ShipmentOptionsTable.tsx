@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { Dimensions, deliveryOptions } from './deliveryOptions';
+import { Dimensions, Provider, deliveryOptions } from './deliveryOptions';
 
 type Props = {
     enteredShipmentRestrictions: EnteredShipmentRestrictions;
@@ -18,6 +18,14 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
     const unselectableStyle = {
         userSelect: 'none' as const,
     };
+
+    function styleProviderColumn(provider: Provider): {backgroundColor: string, color: string, fontWeight: string} {
+        return { 
+            backgroundColor: provider === 'DHL' ? '#ffcc00' : provider === 'Hermes' ? '#008ec1' : 'white',
+            color: provider === 'Hermes' ? 'white' : 'black',
+            fontWeight: 'bold' 
+        }
+    }
 
     const optionsSortedByPrice = [...deliveryOptions].sort((a, b) => {
         return sortPriceAsc ? a.priceEur - b.priceEur : b.priceEur - a.priceEur;
@@ -45,7 +53,9 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
                     .filter(option => option.dimensionRestrictions(parseDimensions(props.enteredShipmentRestrictions)))
                     .map(option => (
                         <tr>
-                            <td>{option.provider}</td>
+                            <td style={styleProviderColumn(option.provider)}>
+                                {option.provider}
+                            </td>
                             <td>{`${option.priceEur.toFixed(2)}€`}</td>
                             <td>{option.dimensionRestrictionText}</td>
                             <td>{`${option.maxWeightKg} kg`}</td>
