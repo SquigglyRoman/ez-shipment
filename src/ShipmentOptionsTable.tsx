@@ -53,7 +53,7 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
                     </th>
                     <th style={unselectableStyle}>Dimensions</th>
                     <th style={unselectableStyle}>Max weight</th>
-                    <th style={unselectableStyle}>Note</th>
+                    <th style={unselectableStyle}>Home delivery</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,7 +68,7 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
                             <td>{`${option.priceEur.toFixed(2)}€`}</td>
                             <td>{option.dimensionRestrictionText}</td>
                             <td>{`${option.maxWeightKg} kg`}</td>
-                            <td>{option.note}</td>
+                            <td>{option.homeDelivery ? '✔' : '❌'}</td>
                         </tr>
                     ))}
             </tbody>
