@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { Dimensions, Provider, deliveryOptions } from './deliveryOptions';
+import { DeliveryOption, Dimensions, Provider, deliveryOptions } from './deliveryOptions';
+import { EnteredShipmentRestrictions } from './EnteredShipmentForm';
 
 type Props = {
     enteredShipmentRestrictions: EnteredShipmentRestrictions;
-}
-
-type EnteredShipmentRestrictions = {
-    enteredLength: string;
-    enteredWidth: string;
-    enteredDepth: string;
 }
 
 const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
@@ -19,11 +14,11 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
         userSelect: 'none' as const,
     };
 
-    function styleProviderColumn(provider: Provider): {backgroundColor: string, color: string, fontWeight: string} {
-        return { 
+    function styleProviderColumn(provider: Provider): { backgroundColor: string, color: string, fontWeight: string } {
+        return {
             backgroundColor: provider === 'DHL' ? '#ffcc00' : provider === 'Hermes' ? '#008ec1' : 'white',
             color: provider === 'Hermes' ? 'white' : 'black',
-            fontWeight: 'bold' 
+            fontWeight: 'bold'
         }
     }
 
@@ -31,8 +26,21 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
         return sortPriceAsc ? a.priceEur - b.priceEur : b.priceEur - a.priceEur;
     });
 
-    function parseDimensions(state: EnteredShipmentRestrictions): Dimensions {
-        return { lengthCm: parseFloat(state.enteredLength) || 0, widthCm: parseFloat(state.enteredWidth) || 0, depthCm: parseFloat(state.enteredDepth) || 0 };
+    function filterWeight(option: DeliveryOption): boolean {
+        return parseFloatOrZero(props.enteredShipmentRestrictions.enteredWeight) <= option.maxWeightKg;
+    }
+
+    function filterDimensions(option: DeliveryOption): unknown {
+        const parsedDimensions: Dimensions = {
+            lengthCm: parseFloatOrZero(props.enteredShipmentRestrictions.enteredLength),
+            widthCm: parseFloatOrZero(props.enteredShipmentRestrictions.enteredWidth),
+            depthCm: parseFloatOrZero(props.enteredShipmentRestrictions.enteredDepth)
+        };
+        return option.dimensionRestrictions(parsedDimensions);
+    }
+
+    function parseFloatOrZero(maybeFloat: string): number {
+        return parseFloat(maybeFloat) || 0;
     }
 
     return (
@@ -50,7 +58,8 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
             </thead>
             <tbody>
                 {optionsSortedByPrice
-                    .filter(option => option.dimensionRestrictions(parseDimensions(props.enteredShipmentRestrictions)))
+                    .filter(option => filterDimensions(option))
+                    .filter(option => filterWeight(option))
                     .map(option => (
                         <tr>
                             <td style={styleProviderColumn(option.provider)}>
@@ -68,3 +77,4 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
 };
 
 export default ShipmentOptionsTable;
+

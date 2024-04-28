@@ -1,20 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from "react";
-import EnteredShipmentForm from './EnteredShipmentForm';
+import EnteredShipmentForm, { EnteredShipmentRestrictions } from './EnteredShipmentForm';
 import ShipmentOptionsTable from "./ShipmentOptionsTable";
-
-export type EnteredShipment = {
-  enteredLength: string;
-  enteredWidth: string;
-  enteredDepth: string;
-}
 
 function App() {
 
-  const [state, setState] = useState<EnteredShipment>({
+  const [state, setState] = useState<EnteredShipmentRestrictions>({
     enteredLength: '',
     enteredWidth: '',
-    enteredDepth: ''
+    enteredDepth: '',
+    enteredWeight: ''
   });
 
   return (

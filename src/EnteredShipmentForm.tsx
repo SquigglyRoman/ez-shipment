@@ -1,10 +1,16 @@
 // DimensionsForm.tsx
 import { Col, Form, Row } from 'react-bootstrap';
-import { EnteredShipment } from './App';
 
 export type Props = {
-    state: EnteredShipment;
-    setState: React.Dispatch<React.SetStateAction<EnteredShipment>>;
+    state: EnteredShipmentRestrictions;
+    setState: React.Dispatch<React.SetStateAction<EnteredShipmentRestrictions>>;
+}
+
+export type EnteredShipmentRestrictions = {
+  enteredLength: string;
+  enteredWidth: string;
+  enteredDepth: string;
+  enteredWeight: string;
 }
 
 const EnteredShipmentForm = (props: Props) => {
@@ -33,6 +39,14 @@ const EnteredShipmentForm = (props: Props) => {
             placeholder="Width (cm)"
             value={props.state.enteredDepth}
             onChange={event => props.setState({ ...props.state, enteredDepth: event.target.value })}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Label>Weight in kg</Form.Label>
+          <Form.Control
+            placeholder="Weight (kg)"
+            value={props.state.enteredWeight}
+            onChange={event => props.setState({ ...props.state, enteredWeight: event.target.value })}
           />
         </Form.Group>
       </Row>
