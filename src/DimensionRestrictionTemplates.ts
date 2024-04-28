@@ -13,3 +13,9 @@ export function meetsLongestAndShortestSideSumRestriction(maxLongestPlusShortest
     const minDimension = Math.min(...dimensionsArray);
     return maxDimension + minDimension <= maxLongestPlusShortestCm;
 }
+
+export function middleLengthIsBelow(maxMiddleValue: number, entered: Dimensions): boolean {
+    const dimensionsArray: number[] = Object.values(entered);
+    const sortedDimensions = dimensionsArray.sort((a, b) => a - b);
+    return sortedDimensions[1] <= maxMiddleValue;
+}

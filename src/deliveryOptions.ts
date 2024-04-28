@@ -1,4 +1,4 @@
-import { meetsLengthWidthHeightRestrictions, meetsLongestAndShortestSideSumRestriction } from "./DimensionRestrictionTemplates"
+import { meetsLengthWidthHeightRestrictions, meetsLongestAndShortestSideSumRestriction, middleLengthIsBelow } from "./DimensionRestrictionTemplates"
 
 export type Provider = "DHL" | "Hermes"
 
@@ -78,7 +78,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 3.70,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(37, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 37cm',
+        dimensionRestrictionText: 'Longest + shortest length below 37cm',
         maxWeightKg: 25,
         homeDelivery: false
     },
@@ -87,7 +87,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 4.50,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(37, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 37cm',
+        dimensionRestrictionText: 'Longest + shortest length below 37cm',
         maxWeightKg: 25,
         homeDelivery: true
     },
@@ -96,7 +96,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 4.40,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(50, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 50cm',
+        dimensionRestrictionText: 'Longest + shortest length below 50cm',
         maxWeightKg: 25,
         homeDelivery: false
     },
@@ -105,7 +105,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 4.95,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(50, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 50cm',
+        dimensionRestrictionText: 'Longest + shortest length below 50cm',
         maxWeightKg: 25,
         homeDelivery: true
     },
@@ -114,7 +114,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 5.40,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(80, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 80cm',
+        dimensionRestrictionText: 'Longest + shortest length below 80cm',
         maxWeightKg: 25,
         homeDelivery: false
     },
@@ -123,7 +123,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 6.75,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(80, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 80cm',
+        dimensionRestrictionText: 'Longest + shortest length below 80cm',
         maxWeightKg: 25,
         homeDelivery: true
     },
@@ -132,7 +132,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 10.40,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(120, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 120cm',
+        dimensionRestrictionText: 'Longest + shortest length below 120cm',
         maxWeightKg: 25,
         homeDelivery: false
     },
@@ -141,7 +141,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 10.95,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(120, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 120cm',
+        dimensionRestrictionText: 'Longest + shortest length below 120cm',
         maxWeightKg: 25,
         homeDelivery: true
     },
@@ -150,7 +150,16 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 28.95,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(150, dimensions),
-        dimensionRestrictionText: 'Longest and shortest side under 150cm',
+        dimensionRestrictionText: 'Longest + shortest length below 150cm',
+        maxWeightKg: 31.5,
+        homeDelivery: true
+    },
+    {
+        name: 'XXL-Paket',
+        provider: "Hermes",
+        priceEur: 33.95,
+        dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(200, dimensions) && middleLengthIsBelow(50, dimensions),
+        dimensionRestrictionText: 'Longest + shortest length below 200cm and third length under 50',
         maxWeightKg: 31.5,
         homeDelivery: true
     }
