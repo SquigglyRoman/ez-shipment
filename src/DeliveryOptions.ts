@@ -159,7 +159,7 @@ export const deliveryOptions: DeliveryOption[] = [
         provider: "Hermes",
         priceEur: 33.95,
         dimensionRestrictions: (dimensions) => meetsLongestAndShortestSideSumRestriction(200, dimensions) && middleLengthIsBelow(50, dimensions),
-        dimensionRestrictionText: 'Longest + shortest length below 200cm and third length under 50',
+        dimensionRestrictionText: 'Longest + shortest length below 200cm and third length under 50cm',
         maxWeightKg: 31.5,
         homeDelivery: true
     }
