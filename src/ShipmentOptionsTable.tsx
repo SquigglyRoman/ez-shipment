@@ -60,12 +60,14 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
                 {optionsSortedByPrice
                     .filter(option => filterDimensions(option))
                     .filter(option => filterWeight(option))
-                    .map(option => (
+                    .map((option, index) => (
                         <tr>
                             <td style={styleProviderColumn(option.provider)}>
                                 {option.provider}
                             </td>
-                            <td>{`${option.priceEur.toFixed(2)}€`}</td>
+                            <td>
+                                {`${option.priceEur.toFixed(2)}€ ${index === 0 ? '✔' : ''}`}
+                            </td>
                             <td>{option.dimensionRestrictionText}</td>
                             <td>{`${option.maxWeightKg} kg`}</td>
                             <td>{option.homeDelivery ? '✔' : '❌'}</td>
