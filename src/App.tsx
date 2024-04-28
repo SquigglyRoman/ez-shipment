@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Col, Form, Row, Table } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Dimensions, deliveryOptions } from "./deliveryOptions";
+import { useState } from "react";
+import { Col, Form, Row } from "react-bootstrap";
+import ShipmentOptionsTable from "./ShipmentOptionsTable";
 
 function App() {
 
@@ -16,10 +16,6 @@ function App() {
     enteredWidth: '',
     enteredDepth: ''
   });
-
-  function parseDimensions(state: EnteredShipmentState): Dimensions {
-    return { lengthCm: parseFloat(state.enteredLength) || 0, widthCm: parseFloat(state.enteredWidth) || 0, depthCm: parseFloat(state.enteredDepth) || 0 };
-  }
 
   return (
     <div className="p-4">
@@ -53,30 +49,7 @@ function App() {
         </Row>
       </Form >
 
-      <Table striped bordered hover className="mt-4">
-        <thead>
-          <tr>
-            <th>Provider</th>
-            <th>Price €</th>
-            <th>Dimensions</th>
-            <th>Max weight</th>
-            <th>Note</th>
-          </tr>
-        </thead>
-        <tbody>
-          {deliveryOptions
-            .filter(option => option.dimensionRestrictions(parseDimensions(state)))
-            .map(option => (
-              <tr>
-                <td>{option.provider}</td>
-                <td>{`${option.priceEur.toFixed(2)}€`}</td>
-                <td>{option.dimensionRestrictionText}</td>
-                <td>{`${option.maxWeightKg} kg`}</td>
-                <td>{option.note}</td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+      <ShipmentOptionsTable enteredShipmentRestrictions={state} />
     </div>
   );
 }
