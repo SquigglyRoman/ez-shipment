@@ -1,3 +1,5 @@
+import { meetsLengthWidthHeightRestrictions } from "./DimensionRestrictionTemplates"
+
 export type Provider = "DHL" | "Hermes"
 
 export type Dimensions = {
@@ -21,8 +23,8 @@ export const deliveryOptions: DeliveryOption[] = [
         name: 'Päckchen S',
         provider: "DHL",
         priceEur: 3.99,
-        dimensionRestrictions: (dimensions) => dimensions.lengthCm <= 35 && dimensions.widthCm <= 25 && dimensions.depthCm <= 10,
-        dimensionRestrictionText: '35x25x10 cm (LxWxD)',
+        dimensionRestrictions: (dimensions) => meetsLengthWidthHeightRestrictions({ lengthCm: 35, widthCm: 25, depthCm: 10 }, dimensions),
+        dimensionRestrictionText: '35x25x10 cm',
         maxWeightKg: 2,
         note: ''
     },
