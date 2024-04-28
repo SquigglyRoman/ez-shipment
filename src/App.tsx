@@ -69,9 +69,9 @@ function App() {
             .map(option => (
               <tr>
                 <td>{option.provider}</td>
-                <td>{`${option.priceEur}€`}</td>
+                <td>{`${option.priceEur.toFixed(2)}€`}</td>
                 <td>{option.dimensionRestrictionText}</td>
-                <td>{`${option.maxWeightKg}kg`}</td>
+                <td>{`${option.maxWeightKg} kg`}</td>
                 <td>{option.note}</td>
               </tr>
             ))}
