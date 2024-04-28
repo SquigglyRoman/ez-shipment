@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { DeliveryOption, Dimensions, Provider, deliveryOptions } from './deliveryOptions';
+import { DeliveryOption, Dimensions, Provider, deliveryOptions } from './DeliveryOptions';
 import { EnteredShipmentRestrictions } from './EnteredShipmentForm';
 
 type Props = {
