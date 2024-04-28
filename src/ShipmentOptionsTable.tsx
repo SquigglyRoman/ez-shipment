@@ -12,7 +12,6 @@ type EnteredShipmentRestrictions = {
     enteredDepth: string;
 }
 
-
 const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
     const [sortPriceAsc, setSortPriceAsc] = useState(true);
 
