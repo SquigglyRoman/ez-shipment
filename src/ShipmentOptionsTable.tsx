@@ -22,7 +22,7 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
             <thead>
                 <tr>
                     <th>Provider</th>
-                    <th>Price €</th>
+                    <th>Price</th>
                     <th>Dimensions</th>
                     <th>Max weight</th>
                     <th>Note</th>
