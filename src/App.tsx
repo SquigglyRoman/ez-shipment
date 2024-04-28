@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Row, Table } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { deliveryOptions } from "./deliveryOptions";
+import { Dimensions, deliveryOptions } from "./deliveryOptions";
 
 function App() {
 
-  const [state, setState] = useState({
-    enteredLengthCm: '',
-    enteredWidthCm: ''
+  interface EnteredShipmentState {
+    enteredLength: string;
+    enteredWidth: string;
+    enteredDepth: string;
+  }
+
+  const [state, setState] = useState<EnteredShipmentState>({
+    enteredLength: '',
+    enteredWidth: '',
+    enteredDepth: ''
   });
 
-  useEffect(() => {
-    console.log(state);
-  }, [state])
+  function parseDimensions(state: EnteredShipmentState): Dimensions {
+    return { lengthCm: parseFloat(state.enteredLength) || 0, widthCm: parseFloat(state.enteredWidth) || 0, depthCm: parseFloat(state.enteredDepth) || 0 };
+  }
 
   return (
     <div className="p-4">
@@ -23,16 +30,24 @@ function App() {
             <Form.Control
               className="border border-primary"
               placeholder="Length (cm)"
-              value={state.enteredLengthCm}
-              onChange={event => setState({ ...state, enteredLengthCm: event.target.value })}
+              value={state.enteredLength}
+              onChange={event => setState({ ...state, enteredLength: event.target.value })}
             />
           </Form.Group>
           <Form.Group as={Col}>
             <Form.Label>Width in cm</Form.Label>
             <Form.Control
               placeholder="Width (cm)"
-              value={state.enteredWidthCm}
-              onChange={event => setState({ ...state, enteredWidthCm: event.target.value })}
+              value={state.enteredWidth}
+              onChange={event => setState({ ...state, enteredWidth: event.target.value })}
+            />
+          </Form.Group>
+          <Form.Group as={Col}>
+            <Form.Label>Depth in cm</Form.Label>
+            <Form.Control
+              placeholder="Width (cm)"
+              value={state.enteredDepth}
+              onChange={event => setState({ ...state, enteredDepth: event.target.value })}
             />
           </Form.Group>
         </Row>
@@ -49,15 +64,17 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {deliveryOptions.map(option => (
-            <tr>
-              <td>{option.provider}</td>
-              <td>{`${option.priceEur}€`}</td>
-              <td>{option.dimensionRestrictionText}</td>
-              <td>{`${option.maxWeightKg}kg`}</td>
-              <td>{option.note}</td>
-            </tr>
-          ))}
+          {deliveryOptions
+            .filter(option => option.dimensionRestrictions(parseDimensions(state)))
+            .map(option => (
+              <tr>
+                <td>{option.provider}</td>
+                <td>{`${option.priceEur}€`}</td>
+                <td>{option.dimensionRestrictionText}</td>
+                <td>{`${option.maxWeightKg}kg`}</td>
+                <td>{option.note}</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </div>
@@ -65,3 +82,4 @@ function App() {
 }
 
 export default App;
+
