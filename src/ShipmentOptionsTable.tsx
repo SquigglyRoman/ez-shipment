@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table } from 'react-bootstrap';
 import { Dimensions, deliveryOptions } from './deliveryOptions';
 
@@ -12,24 +12,33 @@ type EnteredShipmentRestrictions = {
     enteredDepth: string;
 }
 
-function parseDimensions(state: EnteredShipmentRestrictions): Dimensions {
-    return { lengthCm: parseFloat(state.enteredLength) || 0, widthCm: parseFloat(state.enteredWidth) || 0, depthCm: parseFloat(state.enteredDepth) || 0 };
-}
 
 const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
+    const [sortPriceAsc, setSortPriceAsc] = useState(true);
+
+    const optionsSortedByPrice = [...deliveryOptions].sort((a, b) => {
+        return sortPriceAsc ? a.priceEur - b.priceEur : b.priceEur - a.priceEur;
+    });
+
+    function parseDimensions(state: EnteredShipmentRestrictions): Dimensions {
+        return { lengthCm: parseFloat(state.enteredLength) || 0, widthCm: parseFloat(state.enteredWidth) || 0, depthCm: parseFloat(state.enteredDepth) || 0 };
+    }
+
     return (
         <Table striped bordered hover className="mt-4">
             <thead>
                 <tr>
                     <th>Provider</th>
-                    <th>Price</th>
+                    <th onClick={() => setSortPriceAsc(!sortPriceAsc)} style={{ cursor: 'pointer' }}>
+                        Price {sortPriceAsc ? '▲' : '▼'}
+                    </th>
                     <th>Dimensions</th>
                     <th>Max weight</th>
                     <th>Note</th>
                 </tr>
             </thead>
             <tbody>
-                {deliveryOptions
+                {optionsSortedByPrice
                     .filter(option => option.dimensionRestrictions(parseDimensions(props.enteredShipmentRestrictions)))
                     .map(option => (
                         <tr>
