@@ -15,6 +15,10 @@ type EnteredShipmentRestrictions = {
 const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
     const [sortPriceAsc, setSortPriceAsc] = useState(true);
 
+    const unselectableStyle = {
+        userSelect: 'none' as const,
+    };
+
     const optionsSortedByPrice = [...deliveryOptions].sort((a, b) => {
         return sortPriceAsc ? a.priceEur - b.priceEur : b.priceEur - a.priceEur;
     });
@@ -27,13 +31,13 @@ const ShipmentOptionsTable: React.FC<Props> = (props: Props) => {
         <Table striped bordered hover className="mt-4">
             <thead>
                 <tr>
-                    <th>Provider</th>
-                    <th onClick={() => setSortPriceAsc(!sortPriceAsc)} style={{ cursor: 'pointer' }}>
+                    <th style={unselectableStyle}>Provider</th>
+                    <th onClick={() => setSortPriceAsc(!sortPriceAsc)} style={{ ...unselectableStyle, cursor: 'pointer' }}>
                         Price {sortPriceAsc ? '▲' : '▼'}
                     </th>
-                    <th>Dimensions</th>
-                    <th>Max weight</th>
-                    <th>Note</th>
+                    <th style={unselectableStyle}>Dimensions</th>
+                    <th style={unselectableStyle}>Max weight</th>
+                    <th style={unselectableStyle}>Note</th>
                 </tr>
             </thead>
             <tbody>
